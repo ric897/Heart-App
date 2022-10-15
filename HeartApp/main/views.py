@@ -2,8 +2,8 @@
 from django.shortcuts import redirect, render
 from django.template import base
 from twilio.rest import Client
-from .forms import Registration
-from .models import NewUser
+from .forms import *
+from .models import *
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
@@ -19,11 +19,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def index(request):
     context = {}
+
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
     return render(request, 'index.html', context)
 
 @login_required
 def dashboard(request):
     context = {}
+    context['patients'] = Patient.objects.filter(supervisor = request.user)
+    context['exercises'] = Training.objects.all()
     return render(request, 'dashboard.html', context)
 
 class CustomLoginView(LoginView):
@@ -47,3 +53,47 @@ class RegisterPage(FormView):
 
     def get_success_url(self):
         return reverse_lazy('dashboard')
+
+class PatientCreate(LoginRequiredMixin, CreateView):
+    form_class = Patientform
+    template_name = 'patientcreate.html'
+
+    def form_valid(self, form):
+        form.instance.supervisor = self.request.user
+        return super(PatientCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard')
+
+class ExerciseCreate(LoginRequiredMixin, CreateView):
+    form_class = Exerciseform
+    template_name = 'exercisecreate.html'
+
+    def form_valid(self, form):
+        return super(ExerciseCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard')
+
+class CourseCreate(LoginRequiredMixin, CreateView):
+    form_class = Courseform
+    template_name = 'coursecreate.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        return super(CourseCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard')
+
+
+class CourseDetail(DetailView):
+    model = Course
+    template_name = 'coursedetail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

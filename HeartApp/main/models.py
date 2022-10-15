@@ -84,3 +84,9 @@ class Training(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Course(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
+    trainings = models.ManyToManyField(Training)
+    description = models.TextField()

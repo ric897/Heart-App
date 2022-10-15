@@ -30,3 +30,4 @@ class UserAdminConfig(UserAdmin):
 admin.site.register(NewUser)
 admin.site.register(Patient)
 admin.site.register(Training)
+admin.site.register(Course)
