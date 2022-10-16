@@ -2,7 +2,7 @@
 Heart that help cardiac rehab and training.
 
 
-## API Example (all end points (here)[https://heartshield.io/api/])
+## API Example (all end points: https://heartshield.io/api/)
 
 ```
 [
