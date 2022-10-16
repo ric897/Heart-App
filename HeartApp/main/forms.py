@@ -41,19 +41,19 @@ class Courseform(forms.ModelForm):
 
     patient = forms.ModelChoiceField(queryset=Patient.objects.all())
     trainings = forms.ModelMultipleChoiceField(queryset=Training.objects.all(), widget=forms.CheckboxSelectMultiple)
+    resources = forms.ModelMultipleChoiceField(queryset=Resource.objects.all(), widget=forms.CheckboxSelectMultiple)
     description = forms.CharField(widget=forms.Textarea(attrs={'class':'h-20'}))
     
     class Meta:
         model = Course
-        fields = ('patient', 'trainings', 'description')
+        fields = ('patient', 'trainings', 'resources', 'description')
 
 class Resourceform(forms.ModelForm):
 
     title = forms.CharField()
     link = forms.CharField()
-    patient = forms.ModelChoiceField(queryset=Patient.objects.all())
     
     
     class Meta:
         model = Resource
-        fields = ('title', 'link', 'patient')
+        fields = ('title', 'link')

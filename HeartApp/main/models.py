@@ -4,15 +4,13 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import socket
-
+from twilio.rest import Client
 from matplotlib.pyplot import title
 socket.gethostbyname("")
 from django.template.loader import render_to_string
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db.models.signals import post_save
 from django.core.validators import MaxValueValidator, MinValueValidator 
-
-
 
 
 class CustomAccountManager(BaseUserManager):
@@ -90,7 +88,6 @@ class Training(models.Model):
 class Resource(models.Model):
     title = models.CharField(max_length=100, null=True)
     link = models.CharField(max_length=100)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.link
@@ -98,5 +95,22 @@ class Resource(models.Model):
 
 class Course(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
-    trainings = models.ForeignKey(Training, on_delete=models.CASCADE, null=True, blank=True)
+    trainings = models.ManyToManyField(Training)
+    resources = models.ManyToManyField(Resource)
     description = models.TextField()
+
+    def __str__(self):
+        return str(self.patient)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        
+        account_sid = 'ACae37ccf8ac3319dd290f0231d5622f5d' 
+        auth_token = 'b0ec31d3b2ddcf52929710eb01a59e67' 
+        client = Client(account_sid, auth_token) 
+ 
+        message = client.messages.create(messaging_service_sid='MG048ec0f37df4867a1e3b57aa6706564b', body='http://localhost:8000/course/' +str(self.id)+'/', to='+1' + str(self.patient.phone))
+
+        super().save(*args, **kwargs)
+
+

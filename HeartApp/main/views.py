@@ -82,7 +82,7 @@ class ResourceCreate(LoginRequiredMixin, CreateView):
     template_name = 'resourcecreate.html'
 
     def form_valid(self, form):
-        return super(Resourceform, self).form_valid(form)
+        return super(ResourceCreate, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('dashboard')
