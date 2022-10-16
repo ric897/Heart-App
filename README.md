@@ -2,26 +2,34 @@
 Heart that help cardiac rehab and training.
 
 
-## API Docs
+## API Example (all end points (here)[https://heartshield.io/api/])
 
 ```
 [
     {
-        "name": "Farrell Hardy", //Nurse Name
-        "email": "nurse@email.com", //email
-        "phone": "123-456-7890" //phone
-        "patients": [ 
+        "email": "test@heartshield.com",
+        "first_name": "test",
+        "start_date": "2022-10-15T05:10:39.835410Z",
+        "id": 1,
+        "patients": [
             {
-                //All patients that the nurse is taking care of
-                "id": 1,
-                "name": "Anne Bradley",
-                "email": patient@email.com,
-                "phone": 123-456-7890,
-                "rehab": link,
+                "id": 6,
+                "name": "Alana Vernon",
+                "email": "avern098@test.com",
+                "phone": "4789037899",
+                "link": "None",
+                "supervisor": 1
+            },
+            {
+                "id": 7,
+                "name": "Issac Hayes",
+                "email": "hayes890@test.com",
+                "phone": "3780158930",
+                "link": "None",
+                "supervisor": 1
             }
-        ]
-            "id": 2 //nurse id 
-     }
+            ...
+       }
 ]
 ```
 
