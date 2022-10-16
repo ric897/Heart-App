@@ -16,6 +16,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
+from rest_framework.viewsets import ModelViewSet
+from .serializers import *
 
 def index(request):
     context = {}
@@ -150,5 +152,26 @@ class AudioDetail(DetailView):
         endpoint = "https://api.assemblyai.com/v2/transcript/" + str(context['object'].audioid)
         response = requests.get(endpoint, headers=headers)
         context['transcript'] = response.json()['text']
-        
+
         return context
+
+
+class PatientViewSet(ModelViewSet):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+
+class UserViewSet(ModelViewSet):
+    queryset = NewUser.objects.all()
+    serializer_class = UserSerializer
+
+class TrainingViewSet(ModelViewSet):
+    queryset = Training.objects.all()
+    serializer_class = TrainingSerializer
+    
+class ResourcesViewSet(ModelViewSet):
+    queryset = Resource.objects.all()
+    serializer_class = ResourceSerializer
+
+class NestedViewSet(ModelViewSet):
+    queryset = NewUser.objects.all()
+    serializer_class = NestedSerializer

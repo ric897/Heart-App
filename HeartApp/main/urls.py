@@ -1,19 +1,20 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
-
-
-
-
-
-
-
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register(r'patients', views.PatientViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'trainings', views.TrainingViewSet)
+router.register(r'resources', views.ResourcesViewSet)
+router.register(r'nested', views.NestedViewSet)
 
 
 urlpatterns = [
 
+    path('api/', include(router.urls)),
     path('', views.index, name="index"),
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
