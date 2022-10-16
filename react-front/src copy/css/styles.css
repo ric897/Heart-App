@@ -1,0 +1,25 @@
+
+
+.no-link{
+    text-decoration: none;
+}
+
+p{
+    margin-bottom: 0 !important;
+}
+
+.number{
+    font-size: small;
+}
+
+.number-span{
+    margin-left: 0rem;
+    margin-right: 0rem;
+}
+
+.patient-parent{
+    max-width: 40rem;
+}
+.nurse-parent{
+    /* max-width: 40rem; */
+}
