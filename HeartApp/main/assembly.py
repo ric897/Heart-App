@@ -21,7 +21,7 @@ def read_file(filename, chunk_size=5242880):
             yield data
 
 def handle(file):
-    headers = {'authorization': "e72231891f984135a0e02e75d0265e09"}
+    headers = {'authorization': ""}
     response = requests.post('https://api.assemblyai.com/v2/upload',
                             headers=headers,
                             data=read_file(file))
@@ -31,7 +31,7 @@ def handle(file):
     endpoint = "https://api.assemblyai.com/v2/transcript"
     json = { "audio_url": str(url) }
     headers = {
-        "authorization": "e72231891f984135a0e02e75d0265e09",
+        "authorization": "",
         "content-type": "application/json"
     }
     response = requests.post(endpoint, json=json, headers=headers)
