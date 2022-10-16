@@ -107,11 +107,11 @@ class Course(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         
-        account_sid = 'ACae37ccf8ac3319dd290f0231d5622f5d' 
-        auth_token = 'b0ec31d3b2ddcf52929710eb01a59e67' 
+        account_sid = '' 
+        auth_token = '' 
         client = Client(account_sid, auth_token) 
  
-        message = client.messages.create(messaging_service_sid='MG048ec0f37df4867a1e3b57aa6706564b', body='http://localhost:8000/course/' +str(self.id)+'/', to='+1' + str(self.patient.phone))
+        message = client.messages.create(messaging_service_sid='', body='http://localhost:8000/course/' +str(self.id)+'/', to='+1' + str(self.patient.phone))
 
         super().save(*args, **kwargs)
 
