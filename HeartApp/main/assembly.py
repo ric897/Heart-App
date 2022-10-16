@@ -35,6 +35,7 @@ def handle(file):
         "content-type": "application/json"
     }
     response = requests.post(endpoint, json=json, headers=headers)
-    print(response.json())
+    
+    return response.json()
 
 

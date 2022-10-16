@@ -120,15 +120,15 @@ class Audio(models.Model):
     supervisor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
     audio = models.FileField(upload_to= 'data/audio', name="audio", null=True)
-    data = models.TextField(null=True, blank=True)
-    result = models.TextField(null=True, blank=True)
+    audioid = models.CharField(max_length=100, null=True)
     created = models.DateTimeField(auto_now_add=True)
     
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         audiofile = str(BASE_DIR) + '/media/' + str(self.audio)
-        handle(audiofile)
+        respose = handle(audiofile)
+        self.audioid = respose['id']
         super().save(*args, **kwargs)
 
 

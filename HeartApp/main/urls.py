@@ -24,6 +24,7 @@ urlpatterns = [
     path('audiocreate/', views.AudioCreate.as_view(), name='audiocreate'),
     path('coursecreate/', views.CourseCreate.as_view(), name='coursecreate'),
     path('course/<pk>/', views.CourseDetail.as_view(), name='coursedetail'),
+    path('audio/<pk>/', views.AudioDetail.as_view(), name='audiodetail'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

@@ -31,12 +31,23 @@ def dashboard(request):
     context['patients'] = Patient.objects.filter(supervisor = request.user)
     context['exercises'] = Training.objects.all()
     context['resources'] = Resource.objects.all()
-    endpoint = "https://api.assemblyai.com/v2/transcript/rk5e8ry4z7-78fd-475d-86d8-0f2ba358d91b"
+    context['audiologs'] = []
     headers = {
         "authorization": "e72231891f984135a0e02e75d0265e09",
     }
-    response = requests.get(endpoint, headers=headers)
-    print(response.json())
+    audiologs = Audio.objects.filter(supervisor = request.user)
+
+    for audio in audiologs:
+        endpoint = "https://api.assemblyai.com/v2/transcript/" + str(audio.audioid)
+        response = requests.get(endpoint, headers=headers)
+        if response.json()['status'] == 'completed':
+            context['audiologs'] += [[audio, 1]]
+        else:
+            context['audiologs'] += [[audio, 0]]
+
+    context['patients'] = context['patients'][::-1]
+    context['audiologs'] = context['audiologs'][::-1]
+
     return render(request, 'dashboard.html', context)
 
 class CustomLoginView(LoginView):
@@ -125,3 +136,19 @@ class AudioCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.supervisor = self.request.user
         return super(AudioCreate, self).form_valid(form)
+
+
+class AudioDetail(DetailView):
+    model = Audio
+    template_name = 'audiodetail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        headers = {
+        "authorization": "e72231891f984135a0e02e75d0265e09",
+        }
+        endpoint = "https://api.assemblyai.com/v2/transcript/" + str(context['object'].audioid)
+        response = requests.get(endpoint, headers=headers)
+        context['transcript'] = response.json()['text']
+        
+        return context
