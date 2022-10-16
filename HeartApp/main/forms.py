@@ -46,3 +46,14 @@ class Courseform(forms.ModelForm):
     class Meta:
         model = Course
         fields = ('patient', 'trainings', 'description')
+
+class Resourceform(forms.ModelForm):
+
+    title = forms.CharField()
+    link = forms.CharField()
+    patient = forms.ModelChoiceField(queryset=Patient.objects.all())
+    
+    
+    class Meta:
+        model = Resource
+        fields = ('title', 'link', 'patient')

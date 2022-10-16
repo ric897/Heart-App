@@ -20,6 +20,7 @@ urlpatterns = [
     path('register/', views.RegisterPage.as_view(), name='register'),
     path('patientcreate/', views.PatientCreate.as_view(), name='patientcreate'),
     path('exercisecreate/', views.ExerciseCreate.as_view(), name='exercisecreate'),
+    path('resourcecreate/', views.ResourceCreate.as_view(), name='resourcecreate'),
     path('coursecreate/', views.CourseCreate.as_view(), name='coursecreate'),
     path('course/<pk>/', views.CourseDetail.as_view(), name='coursedetail'),
     path('dashboard/', views.dashboard, name='dashboard'),

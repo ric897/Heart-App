@@ -30,6 +30,7 @@ def dashboard(request):
     context = {}
     context['patients'] = Patient.objects.filter(supervisor = request.user)
     context['exercises'] = Training.objects.all()
+    context['resources'] = Resource.objects.all()
     return render(request, 'dashboard.html', context)
 
 class CustomLoginView(LoginView):
@@ -71,6 +72,17 @@ class ExerciseCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         return super(ExerciseCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard')
+
+
+class ResourceCreate(LoginRequiredMixin, CreateView):
+    form_class = Resourceform
+    template_name = 'resourcecreate.html'
+
+    def form_valid(self, form):
+        return super(Resourceform, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('dashboard')

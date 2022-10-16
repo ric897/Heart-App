@@ -4,6 +4,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import socket
+
+from matplotlib.pyplot import title
 socket.gethostbyname("")
 from django.template.loader import render_to_string
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -85,8 +87,16 @@ class Training(models.Model):
     def __str__(self):
         return self.title
 
+class Resource(models.Model):
+    title = models.CharField(max_length=100, null=True)
+    link = models.CharField(max_length=100)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.link
+
 
 class Course(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
-    trainings = models.ManyToManyField(Training)
+    trainings = models.ForeignKey(Training, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField()
