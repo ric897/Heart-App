@@ -115,7 +115,7 @@
                     <div id="menu" class="navmenu backdrop-filter-none hidden w-full flex-wrap justify-end items-center mb-16 mx-6 space-y-20 p-6 rounded-xl shadow-lg bg-white lg:space-y-0 lg:p-0 lg:m-0 lg:flex md:flex-nowrap lg:bg-transparent lg:w-7/12 lg:shadow-none">
                         <div class="text-gray-600 lg:pr-4">
                             {% if user.is_authenticated %}
-                            <div class="w-full text-white sm:pl-6 font-bold space-y-2 flex flex-colsm:flex-row lg:space-y-2 md:w-max lg:border-l">
+                            <div class="w-full text-white sm:pl-6 font-bold space-y-2 flex flex-colsm:flex-row lg:space-y-2 md:w-max">
                                 <a href="{% url 'coursecreate' %}" type="button" title="Start buying" class="w-full py-2.5 px-3 text-center rounded-xl transition bg-red-500 border-2 border-red-500 sm:w-max">
                                     <span class="block text-white font-bold lg:text-sm">
                                         Create / Assign Course
@@ -139,6 +139,15 @@
                             </ul>
                             {% endif %}
                         </div>
+                        {% if user.is_authenticated %}
+                        <div class="w-full text-white sm:px-6 font-bold space-y-2 flex flex-colsm:flex-row lg:space-y-2 md:w-max lg:border-l">
+                          <a href="{% url 'audiocreate' %}" type="button" title="Start buying" class="w-full py-2.5 px-3 text-center rounded-xl transition bg-red-500 border-2 border-red-500 sm:w-max">
+                              <span class="block text-white font-bold lg:text-sm">
+                                  HeartTalksAI
+                              </a>
+                          </button>
+                      </div>
+                      {% endif %}
 
                         {% if user.is_authenticated %}
                         <div class="w-full text-white sm:pl-6 font-bold space-y-2 flex flex-colsm:flex-row lg:space-y-2 md:w-max lg:border-l">

@@ -31,6 +31,12 @@ def dashboard(request):
     context['patients'] = Patient.objects.filter(supervisor = request.user)
     context['exercises'] = Training.objects.all()
     context['resources'] = Resource.objects.all()
+    endpoint = "https://api.assemblyai.com/v2/transcript/rk5e8ry4z7-78fd-475d-86d8-0f2ba358d91b"
+    headers = {
+        "authorization": "e72231891f984135a0e02e75d0265e09",
+    }
+    response = requests.get(endpoint, headers=headers)
+    print(response.json())
     return render(request, 'dashboard.html', context)
 
 class CustomLoginView(LoginView):
@@ -109,3 +115,13 @@ class CourseDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class AudioCreate(LoginRequiredMixin, CreateView):
+    form_class = Audioform
+    template_name = 'audioform.html'
+    success_url = reverse_lazy('dashboard')
+
+    def form_valid(self, form):
+        form.instance.supervisor = self.request.user
+        return super(AudioCreate, self).form_valid(form)

@@ -57,3 +57,12 @@ class Resourceform(forms.ModelForm):
     class Meta:
         model = Resource
         fields = ('title', 'link')
+
+
+class Audioform(forms.ModelForm):
+    audio = forms.FileField(label='', widget=forms.FileInput(attrs={'id':'myfiles', 'class':'text-xl w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none hidden', 'onchange':'pullfiles' }))
+    patient = forms.ModelChoiceField(queryset=Patient.objects.all())
+    
+    class Meta:
+        model = Audio
+        fields = ('audio', 'patient')

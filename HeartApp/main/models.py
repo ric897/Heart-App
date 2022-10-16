@@ -11,6 +11,8 @@ from django.template.loader import render_to_string
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db.models.signals import post_save
 from django.core.validators import MaxValueValidator, MinValueValidator 
+from HeartApp.settings import BASE_DIR
+from .assembly import *
 
 
 class CustomAccountManager(BaseUserManager):
@@ -111,6 +113,22 @@ class Course(models.Model):
  
         message = client.messages.create(messaging_service_sid='MG048ec0f37df4867a1e3b57aa6706564b', body='http://localhost:8000/course/' +str(self.id)+'/', to='+1' + str(self.patient.phone))
 
+        super().save(*args, **kwargs)
+
+
+class Audio(models.Model):
+    supervisor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
+    audio = models.FileField(upload_to= 'data/audio', name="audio", null=True)
+    data = models.TextField(null=True, blank=True)
+    result = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        audiofile = str(BASE_DIR) + '/media/' + str(self.audio)
+        handle(audiofile)
         super().save(*args, **kwargs)
 
 
