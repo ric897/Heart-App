@@ -35,7 +35,7 @@ def dashboard(request):
     context['resources'] = Resource.objects.all()
     context['audiologs'] = []
     headers = {
-        "authorization": "e72231891f984135a0e02e75d0265e09",
+        "authorization": "",
     }
     audiologs = Audio.objects.filter(supervisor = request.user)
 
@@ -147,7 +147,7 @@ class AudioDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         headers = {
-        "authorization": "e72231891f984135a0e02e75d0265e09",
+        "authorization": "",
         }
         endpoint = "https://api.assemblyai.com/v2/transcript/" + str(context['object'].audioid)
         response = requests.get(endpoint, headers=headers)
