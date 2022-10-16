@@ -128,6 +128,6 @@ class ResourcesViewSet(ModelViewSet):
     queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
 
-class CoursesViewSet(ModelViewSet):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
+class NestedViewSet(ModelViewSet):
+    queryset = NewUser.objects.all()
+    serializer_class = NestedSerializer

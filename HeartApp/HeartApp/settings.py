@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'main',
     "crispy_forms",
     "crispy_tailwind",
-    'rest_framework'
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+   
 ]
 
 ROOT_URLCONF = 'HeartApp.urls'
@@ -69,6 +73,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
+    'http://heartshield.io'
 ]
 
 WSGI_APPLICATION = 'HeartApp.wsgi.application'
@@ -133,3 +143,7 @@ AUTH_USER_MODEL = 'main.newuser'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+
+
+

@@ -10,7 +10,7 @@ router.register(r'patients', views.PatientViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'trainings', views.TrainingViewSet)
 router.register(r'resources', views.ResourcesViewSet)
-router.register(r'courses', views.CoursesViewSet)
+router.register(r'nested', views.NestedViewSet)
 
 
 urlpatterns = [

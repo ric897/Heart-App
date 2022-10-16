@@ -6,10 +6,16 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         model = Patient
         fields = ['name', 'email', 'phone', 'link']
 
+
+
+
+
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = NewUser
-        fields = "__all__"
+        exclude = ('user_permissions',)
 
 class TrainingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -28,3 +34,21 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Course
         fields = "__all__"
+
+class PatientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        fields = "__all__"
+
+class NestedSerializer(serializers.ModelSerializer):
+    patients = serializers.SerializerMethodField()
+
+    class Meta:
+        fields = ('email', 'id', 'patients')
+        model = NewUser
+
+    def get_patients(self, obj):
+        patient_query = Patient.objects.filter(supervisor = obj.id)
+        serializer = PatientSerializer(patient_query, many=True)
+
+        return serializer.data
