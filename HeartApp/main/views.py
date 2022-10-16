@@ -2,6 +2,7 @@
 from django.shortcuts import redirect, render
 from django.template import base
 from twilio.rest import Client
+from .serializers import *
 from .forms import *
 from .models import *
 from django.views.generic.list import ListView
@@ -15,7 +16,8 @@ from urllib.parse import urlencode
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, QueryDict
+from rest_framework.viewsets import ModelViewSet
 
 def index(request):
     context = {}
@@ -109,3 +111,23 @@ class CourseDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+class PatientViewSet(ModelViewSet):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+
+class UserViewSet(ModelViewSet):
+    queryset = NewUser.objects.all()
+    serializer_class = UserSerializer
+
+class TrainingViewSet(ModelViewSet):
+    queryset = Training.objects.all()
+    serializer_class = TrainingSerializer
+    
+class ResourcesViewSet(ModelViewSet):
+    queryset = Resource.objects.all()
+    serializer_class = ResourceSerializer
+
+class CoursesViewSet(ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
